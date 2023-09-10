@@ -9,8 +9,7 @@ import { getUserId } from "../utils";
 import { updateBook } from "../../logic/books";
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const bookId = even;
-    t.pathParameters.bookId;
+    const bookId = event.pathParameters.bookId;
     const updatedItem: UpdateBookRequest = JSON.parse(event.body);
     const userId = getUserId(event);
     const book = await updateBook(userId, bookId, updatedItem);

@@ -4,21 +4,21 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import * as middy from "middy";
 import { cors, httpErrorHandler } from "middy/middlewares";
 
-import { UpdateItemRequest } from "../../requests/UpdateItemRequest";
+import { UpdateBookRequest } from "../../requests/UpdateBookRequest";
 import { getUserId } from "../utils";
-import { updateItem } from "../../logic/items";
+import { updateBook } from "../../logic/books";
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const itemId = event.pathParameters.itemId;
-    const updatedItem: UpdateItemRequest = JSON.parse(event.body);
+    const bookId = event.pathParameters.bookId;
+    const updatedBook: UpdateBookRequest = JSON.parse(event.body);
     const userId = getUserId(event);
-    const item = await updateItem(userId, itemId, updatedItem);
+    const book = await updateBook(userId, bookId, updatedBook);
     return {
       statusCode: 200,
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(item),
+      body: JSON.stringify(book),
     };
   }
 );
